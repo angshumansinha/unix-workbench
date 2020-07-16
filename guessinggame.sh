@@ -1,28 +1,43 @@
-echo " Welcome to the Guessing game"
+#Shell script code for guessing game
 
-function guess {
-		echo "Try and guess the number of files in the current directory:"
-			read value
-			    files=$(ls -1 | wc -l)
-		    }
+#taking user input
+echo "Hello there! Welcome to the guessing game world. You guess, you win. You guess, you loose"
 
-	    guess
 
-	    while [[ $value -ne $files ]]
-	    do
-		    	if [[ $value -lt $files ]] 
-					then
-								echo "Too low."
-										echo " "
-											else
-														echo "Too high."
-																echo " "
-																	fi
-																		guess
-																	done
 
-																	echo " "
-																	echo "Awesome ! you are correct"
-																	echo " "
-																	echo "The list of files are below"
-																	echo "---" && ls -1
+#creating a function
+
+function determine {
+    echo "Enter your guess"
+    read num
+	ls -1>listfile.txt
+	count=0 #for counting
+	#using a loop to keep count of the files
+        for i in `cat listfile.txt`
+	do
+		count=$((count+1))
+	done
+
+	
+	
+	#running if else
+	if [[ $num -gt $count ]]
+       	then
+	       echo "Too high"
+	       echo "**Please Try Again**"
+	       determine
+
+       elif [[ $num -lt $count ]]
+       then
+               echo "Too low"	 
+	       echo "**Please Try Again**"
+	       determine
+       else
+	       echo "Awesome! you are right"
+	       echo "Here is the list of files"
+	       cat listfile.txt
+    fi
+}
+
+#calling the function
+determine
